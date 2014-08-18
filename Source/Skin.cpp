@@ -201,8 +201,8 @@ void Skin::loadFromXml(XmlElement* el)
 		while(comp)
 		{
 			SkinComp* skinComp = this->createComp();
+            skinComp->setList(&comps);
 			skinComp->setFromXml(comp);
-			skinComp->setList(&comps);
 			comp = comp->getNextElement();
 		}
 	}

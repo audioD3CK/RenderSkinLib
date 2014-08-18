@@ -2,14 +2,15 @@
 #include "Skin.h"
 #include "SkinCompGUI.h"
 #include "SkinCompControl.h"
-#include "ShottyLook.h"
+
+const int controllHeight = 20;
 
 SkinGUI::SkinGUI(Skin* skin,double scale):
 SkinViewComp(skin),
 skinChooser("skin file",skin->getFile(),false,false,false,"*.xml","","choose skin"),
 resizer(this,this)
 {
-	skinChooser.setBounds(0,0,getWidth(),ShottyLook::defaultControllHeight);
+	skinChooser.setBounds(0,0,getWidth(),controllHeight);
 	skinChooser.addListener(this);
 	addAndMakeVisible(&skinChooser);
     addAndMakeVisible(resizer);
@@ -144,7 +145,7 @@ void SkinGUI::setSize()
     }
     else
     {
-        SkinViewComp::setSize(getWidth(),ShottyLook::defaultControllHeight*(parameters.size()) +20);
+        SkinViewComp::setSize(getWidth(),controllHeight*(parameters.size()) +20);
     }
     
     repaint();
@@ -172,14 +173,12 @@ void SkinGUI::resized()
         for(int i = getNumChildComponents(); -- i >= 0 ; )
         {
             Component* c = getChildComponent(i);
-            if(dynamic_cast<CompPopup*>(c) == 0)// != &this->popup)
-            {
-                c->setBounds(0,c->getY(),getWidth(),c->getHeight());
-            }
+            
+            c->setBounds(0,c->getY(),getWidth(),c->getHeight());
         }
     }
     
-    resizer.setBounds(getWidth()-ShottyLook::defaultControllHeight, getHeight()-ShottyLook::defaultControllHeight, ShottyLook::defaultControllHeight, ShottyLook::defaultControllHeight);
+    resizer.setBounds(getWidth()-controllHeight, getHeight()-controllHeight, controllHeight, controllHeight);
     
     this->refreshCompPositions();
     

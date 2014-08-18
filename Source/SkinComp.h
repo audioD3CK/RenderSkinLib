@@ -3,7 +3,6 @@
 #include "ListItem.h"
 #include "NamableObject.h"
 #include "BoundsDriver.h"
-#include "CompPopup.h"
 
 class Skin;
 
@@ -25,12 +24,15 @@ public:
 	void checkBounds(Rectangle<int>& bounds, const Rectangle<int>& previousBounds, const Rectangle<int>& limits, bool isStretchingTop, bool isStretchingLeft,bool isStretchingBottom,bool isStretchingRight) override;
     void changeListenerCallback(ChangeBroadcaster* obj)override;
     
-    virtual Component* createControllComponent()const;
+    virtual Component* createControllComponent();
     
-	virtual void setFrame(double frame);
 	virtual double getDefaultFrame() const;
-    virtual double getFrame() const;
     virtual Range<int> getRange()const;
+    
+    
+    virtual void setValue(double frame);
+    virtual double getValue() const;
+
     
     double getAbsolutFrame();
     
@@ -88,7 +90,8 @@ protected:
     Range<int> frames;
     
     int parameterIndex;
-    float framei;
+    
+    double value;
     
     CompType compType;
     ClipType cliptype;

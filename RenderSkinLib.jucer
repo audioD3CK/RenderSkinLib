@@ -8,49 +8,54 @@
               pluginManufacturer="audioD3CK" pluginDesc="RenderSkinLib" pluginName="RenderSkinLib"
               buildAAX="1" buildRTAS="0" buildVST3="1" buildAU="1" buildVST="1">
   <MAINGROUP id="y2Bk9q" name="RenderSkinLib">
-    <GROUP id="{9B0E7A41-C882-F111-7F01-DEB820FA1AE3}" name="UI">
-      <FILE id="zPVE5u" name="SkinCompControl.cpp" compile="1" resource="0"
-            file="Source/SkinCompControl.cpp"/>
-      <FILE id="sWaLcv" name="SkinCompControl.h" compile="0" resource="0"
-            file="Source/SkinCompControl.h"/>
-      <FILE id="mQkRWy" name="SkinCompGUI.cpp" compile="1" resource="0" file="Source/SkinCompGUI.cpp"/>
-      <FILE id="F7pHfD" name="SkinCompGUI.h" compile="0" resource="0" file="Source/SkinCompGUI.h"/>
-      <FILE id="SqxXEo" name="SkinGUI.cpp" compile="1" resource="0" file="Source/SkinGUI.cpp"/>
-      <FILE id="fwjNSp" name="SkinGUI.h" compile="0" resource="0" file="Source/SkinGUI.h"/>
-      <FILE id="YIf7J4" name="SkinKnob.cpp" compile="1" resource="0" file="Source/SkinKnob.cpp"/>
-      <FILE id="zjwoqF" name="SkinKnob.h" compile="0" resource="0" file="Source/SkinKnob.h"/>
-      <FILE id="xff7Xq" name="SkinViewComp.cpp" compile="1" resource="0"
-            file="Source/SkinViewComp.cpp"/>
-      <FILE id="NV8F3S" name="SkinViewComp.h" compile="0" resource="0" file="Source/SkinViewComp.h"/>
-      <FILE id="R6DHUu" name="CompPopup.cpp" compile="1" resource="0" file="Source/CompPopup.cpp"/>
-      <FILE id="geVicJ" name="CompPopup.h" compile="0" resource="0" file="Source/CompPopup.h"/>
+    <GROUP id="{8F35E51D-3BDC-E1AC-6220-BE2C4BE1C863}" name="Source">
+      <GROUP id="{9B0E7A41-C882-F111-7F01-DEB820FA1AE3}" name="UI">
+        <FILE id="zPVE5u" name="SkinCompControl.cpp" compile="1" resource="0"
+              file="Source/SkinCompControl.cpp"/>
+        <FILE id="sWaLcv" name="SkinCompControl.h" compile="0" resource="0"
+              file="Source/SkinCompControl.h"/>
+        <FILE id="mQkRWy" name="SkinCompGUI.cpp" compile="1" resource="0" file="Source/SkinCompGUI.cpp"/>
+        <FILE id="F7pHfD" name="SkinCompGUI.h" compile="0" resource="0" file="Source/SkinCompGUI.h"/>
+        <FILE id="SqxXEo" name="SkinGUI.cpp" compile="1" resource="0" file="Source/SkinGUI.cpp"/>
+        <FILE id="fwjNSp" name="SkinGUI.h" compile="0" resource="0" file="Source/SkinGUI.h"/>
+        <FILE id="YIf7J4" name="SkinKnob.cpp" compile="1" resource="0" file="Source/SkinKnob.cpp"/>
+        <FILE id="zjwoqF" name="SkinKnob.h" compile="0" resource="0" file="Source/SkinKnob.h"/>
+        <FILE id="xff7Xq" name="SkinViewComp.cpp" compile="1" resource="0"
+              file="Source/SkinViewComp.cpp"/>
+        <FILE id="NV8F3S" name="SkinViewComp.h" compile="0" resource="0" file="Source/SkinViewComp.h"/>
+      </GROUP>
+      <GROUP id="{502E5F99-46F0-A711-BB37-AC5971527138}" name="AudioProcessorSkn">
+        <FILE id="DA9Ofa" name="AudioProcessorSkinComp.cpp" compile="1" resource="0"
+              file="Source/AudioProcessorSkinComp.cpp"/>
+        <FILE id="nmqPU9" name="AudioProcessorSkinComp.h" compile="0" resource="0"
+              file="Source/AudioProcessorSkinComp.h"/>
+        <FILE id="v0BQKJ" name="AudioProcessorSkin.cpp" compile="1" resource="0"
+              file="Source/AudioProcessorSkin.cpp"/>
+        <FILE id="d5h1eu" name="AudioProcessorSkin.h" compile="0" resource="0"
+              file="Source/AudioProcessorSkin.h"/>
+      </GROUP>
+      <FILE id="FRaz8a" name="Skin.cpp" compile="1" resource="0" file="Source/Skin.cpp"/>
+      <FILE id="tktzu0" name="Skin.h" compile="0" resource="0" file="Source/Skin.h"/>
+      <FILE id="jwRrQa" name="SkinComp.cpp" compile="1" resource="0" file="Source/SkinComp.cpp"/>
+      <FILE id="qXRB63" name="SkinComp.h" compile="0" resource="0" file="Source/SkinComp.h"/>
     </GROUP>
-    <GROUP id="{502E5F99-46F0-A711-BB37-AC5971527138}" name="AudioProcessorSkn">
-      <FILE id="v0BQKJ" name="AudioProcessorSkin.cpp" compile="1" resource="0"
-            file="Source/AudioProcessorSkin.cpp"/>
-      <FILE id="d5h1eu" name="AudioProcessorSkin.h" compile="0" resource="0"
-            file="Source/AudioProcessorSkin.h"/>
-    </GROUP>
-    <FILE id="FRaz8a" name="Skin.cpp" compile="1" resource="0" file="Source/Skin.cpp"/>
-    <FILE id="tktzu0" name="Skin.h" compile="0" resource="0" file="Source/Skin.h"/>
-    <FILE id="jwRrQa" name="SkinComp.cpp" compile="1" resource="0" file="Source/SkinComp.cpp"/>
-    <FILE id="qXRB63" name="SkinComp.h" compile="0" resource="0" file="Source/SkinComp.h"/>
+    <GROUP name="deps" id="kXq94F"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="/Users/jms/Development/audioD3CK/lib/vstsdk2.4"
-               postbuildCommand="# This script takes the build product and copies it to the AU, VST, and RTAS folders, depending on &#10;# which plugin types you've built&#10;&#10;original=$CONFIGURATION_BUILD_DIR/$FULL_PRODUCT_NAME&#10;setfileicon $original/Contents/Resources/Icon.icns $original&#10; &#10;# this looks inside the binary to detect which platforms are needed.. &#10;copyAU=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'AudioUnit' | wc -l&#96;&#10;copyVST=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'VSTPlugin' | wc -l&#96;&#10;copyRTAS=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'CProcess' | wc -l&#96;&#10;copyAAX=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'ACFStartup' | wc -l&#96;&#10;&#10;if [ $copyAU -gt 0 ]; then&#10;  echo &quot;Copying to AudioUnit folder...&quot;&#10;  AU=~/Library/Audio/Plug-Ins/Components/RenderSkinLib.component&#10;  if [ -d &quot;$AU&quot; ]; then &#10;    rm -r &quot;$AU&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$AU&quot;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$AU/Contents/PkgInfo&quot;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$AU/Contents/$INFOPLIST_FILE&quot;&#10;&#10;  # Fix info.plist for AUs built with Xcode 3&#10;  if [ -f &quot;$DEVELOPER_DIR/Library/Developer/CoreAudio/AudioUnits/AUPublic/AUBase/AUPlugInDispatch.cpp&quot; ]; then&#10;    echo&#10;  else&#10;    echo &quot;Removing AudioComponents entry from Info.plist because this is not a new-format AU&quot;&#10;    /usr/libexec/PlistBuddy -c &quot;Delete AudioComponents&quot; &quot;$AU/Contents/Info.plist&quot;&#10;  fi&#10;fi&#10;&#10;if [ $copyVST -gt 0 ]; then&#10;  echo &quot;Copying to VST folder...&quot;&#10;  VST=~/Library/Audio/Plug-Ins/VST/RenderSkinLib.vst&#10;  if [ -d &quot;$VST&quot; ]; then &#10;    rm -r &quot;$VST&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$VST&quot;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$VST/Contents/PkgInfo&quot;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$VST/Contents/$INFOPLIST_FILE&quot;&#10;fi&#10;&#10;if [ $copyRTAS -gt 0 ]; then&#10;  echo &quot;Copying to RTAS folder...&quot;&#10;  RTAS=/Library/Application\ Support/Digidesign/Plug-Ins/RenderSkinLib.dpm&#10;  if [ -d &quot;$RTAS&quot; ]; then&#10;    rm -r &quot;$RTAS&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$RTAS&quot;&#10;fi&#10;&#10;if [ $copyAAX -gt 0 ]; then&#10;  echo &quot;Copying to AAX folder...&quot;&#10;&#10;  if [ -d &quot;/Applications/ProTools_3PDev/Plug-Ins&quot; ]; then&#10;    AAX1=&quot;/Applications/ProTools_3PDev/Plug-Ins/RenderSkinLib.aaxplugin&quot;&#10;&#10;    if [ -d &quot;$AAX1&quot; ]; then&#10;      rm -r &quot;$AAX1&quot;&#10;    fi&#10;&#10;    cp -r &quot;$original&quot; &quot;$AAX1&quot;&#10;  fi&#10;&#10;  if [ -d &quot;/Library/Application Support/Avid/Audio/Plug-Ins&quot; ]; then&#10;    AAX2=&quot;/Library/Application Support/Avid/Audio/Plug-Ins/RenderSkinLib.aaxplugin&quot;&#10;&#10;    if [ -d &quot;$AAX2&quot; ]; then&#10;      rm -r &quot;$AAX2&quot;&#10;    fi&#10;&#10;    cp -r &quot;$original&quot; &quot;$AAX2&quot;&#10;  fi&#10;fi&#10;"
+               postbuildCommand="# This script takes the build product and copies it to the AU, VST, and RTAS folders, depending on &#10;# which plugin types you've built&#10;&#10;original=$CONFIGURATION_BUILD_DIR/$FULL_PRODUCT_NAME&#10;setfileicon $original/Contents/Resources/Icon.icns $original&#10; &#10;# this looks inside the binary to detect which platforms are needed.. &#10;copyAU=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'AudioUnit' | wc -l&#96;&#10;copyVST=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'VSTPlugin' | wc -l&#96;&#10;copyRTAS=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'CProcess' | wc -l&#96;&#10;copyAAX=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'ACFStartup' | wc -l&#96;&#10;&#10;if [ $copyAU -gt 0 ]; then&#10;  echo &quot;Copying to AudioUnit folder...&quot;&#10;  AU=~/Library/Audio/Plug-Ins/Components/template.component&#10;  if [ -d &quot;$AU&quot; ]; then &#10;    rm -r &quot;$AU&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$AU&quot;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$AU/Contents/PkgInfo&quot;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$AU/Contents/$INFOPLIST_FILE&quot;&#10;&#10;  # Fix info.plist for AUs built with Xcode 3&#10;  if [ -f &quot;$DEVELOPER_DIR/Library/Developer/CoreAudio/AudioUnits/AUPublic/AUBase/AUPlugInDispatch.cpp&quot; ]; then&#10;    echo&#10;  else&#10;    echo &quot;Removing AudioComponents entry from Info.plist because this is not a new-format AU&quot;&#10;    /usr/libexec/PlistBuddy -c &quot;Delete AudioComponents&quot; &quot;$AU/Contents/Info.plist&quot;&#10;  fi&#10;fi&#10;&#10;if [ $copyVST -gt 0 ]; then&#10;  echo &quot;Copying to VST folder...&quot;&#10;  VST=~/Library/Audio/Plug-Ins/VST/template.vst&#10;  if [ -d &quot;$VST&quot; ]; then &#10;    rm -r &quot;$VST&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$VST&quot;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$VST/Contents/PkgInfo&quot;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$VST/Contents/$INFOPLIST_FILE&quot;&#10;fi&#10;&#10;if [ $copyRTAS -gt 0 ]; then&#10;  echo &quot;Copying to RTAS folder...&quot;&#10;  RTAS=/Library/Application\ Support/Digidesign/Plug-Ins/template.dpm&#10;  if [ -d &quot;$RTAS&quot; ]; then&#10;    rm -r &quot;$RTAS&quot;&#10;  fi&#10;&#10;  cp -r &quot;$original&quot; &quot;$RTAS&quot;&#10;fi&#10;&#10;if [ $copyAAX -gt 0 ]; then&#10;  echo &quot;Copying to AAX folder...&quot;&#10;&#10;  if [ -d &quot;/Applications/ProTools_3PDev/Plug-Ins&quot; ]; then&#10;    AAX1=&quot;/Applications/ProTools_3PDev/Plug-Ins/template.aaxplugin&quot;&#10;&#10;    if [ -d &quot;$AAX1&quot; ]; then&#10;      rm -r &quot;$AAX1&quot;&#10;    fi&#10;&#10;    cp -r &quot;$original&quot; &quot;$AAX1&quot;&#10;  fi&#10;&#10;  if [ -d &quot;/Library/Application Support/Avid/Audio/Plug-Ins&quot; ]; then&#10;    AAX2=&quot;/Library/Application Support/Avid/Audio/Plug-Ins/template.aaxplugin&quot;&#10;&#10;    if [ -d &quot;$AAX2&quot; ]; then&#10;      rm -r &quot;$AAX2&quot;&#10;    fi&#10;&#10;    cp -r &quot;$original&quot; &quot;$AAX2&quot;&#10;  fi&#10;fi&#10;"
                externalLibraries="" smallIcon="" bigIcon="" prebuildCommand=""
                aaxFolder="/Users/jms/Development/audioD3CK/lib/AAX_SDK_2p1p1"
                rtasFolder="../PT_80_SDK" vst3Folder="/Users/jms/Development/audioD3CK/lib/VST3 SDK">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="1" targetName="RenderSkinLib" headerPath="&#10;/Users/jms/Development/audioD3CK/lib/FFTReal-2.11&#10;/Users/jms/Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;/Users/jms/Development/audioD3CK/source/D3CKCore/Source"
+                       isDebug="1" optimisation="1" targetName="RenderSkinLib" headerPath="&#10;/Users/jms/Development/audioD3CK/lib/FFTReal-2.11&#10;/Users/jms/Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;/Users/jms/Development/audioD3CK/source/D3CKCore/Source&#10;/Users/jms/Development/audioD3CK/source/D3CKInterface/Source"
                        libraryPath=""/>
         <CONFIGURATION name="Test" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
-                       isDebug="1" optimisation="3" targetName="RenderSkinLib" headerPath="/Users/jms/Development/audioD3CK/lib/FFTReal-2.11&#10;/Users/jms/Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;/Users/jms/Development/audioD3CK/source/D3CKCore/Source"
+                       isDebug="1" optimisation="3" targetName="RenderSkinLib" headerPath="/Users/jms/Development/audioD3CK/lib/FFTReal-2.11&#10;/Users/jms/Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;/Users/jms/Development/audioD3CK/source/D3CKCore/Source&#10;/Users/jms/Development/audioD3CK/source/D3CKInterface/Source"
                        libraryPath=""/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.4 SDK" osxArchitecture="64BitUniversal"
-                       isDebug="0" optimisation="3" targetName="RenderSkinLib" headerPath="/Users/jms/Development/audioD3CK/lib/FFTReal-2.11&#10;/Users/jms/Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;/Users/jms/Development/audioD3CK/source/D3CKCore/Source"
+                       isDebug="0" optimisation="3" targetName="RenderSkinLib" headerPath="/Users/jms/Development/audioD3CK/lib/FFTReal-2.11&#10;/Users/jms/Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;/Users/jms/Development/audioD3CK/source/D3CKCore/Source&#10;/Users/jms/Development/audioD3CK/source/D3CKInterface/Source"
                        libraryPath=""/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -77,15 +82,15 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="RenderSkinLib" libraryPath=""
-                       headerPath="&#10;g://Development/audioD3CK/lib/FFTReal-2.11&#10;g://Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;g://Development/audioD3CK/source/D3CKCore/Source"
+                       headerPath="&#10;g://Development/audioD3CK/lib/FFTReal-2.11&#10;g://Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;g://Development/audioD3CK/source/D3CKCore/Source&#10;g://Development/audioD3CK/source/D3CKInterface/Source"
                        useRuntimeLibDLL="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="RenderSkinLib" libraryPath=""
-                       headerPath="&#10;g://Development/audioD3CK/lib/FFTReal-2.11&#10;g://Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;&#10;g://Development/audioD3CK/source/D3CKCore/Source"
+                       headerPath="&#10;g://Development/audioD3CK/lib/FFTReal-2.11&#10;g://Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;&#10;g://Development/audioD3CK/source/D3CKCore/Source&#10;g://Development/audioD3CK/source/D3CKInterface/Source"
                        useRuntimeLibDLL="0" postbuildCommand=""/>
         <CONFIGURATION name="Release64" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="RenderSkinLib" libraryPath=""
-                       headerPath="&#10;g://Development/audioD3CK/lib/FFTReal-2.11&#10;g://Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;&#10;g://Development/audioD3CK/source/D3CKCore/Source"
+                       headerPath="&#10;g://Development/audioD3CK/lib/FFTReal-2.11&#10;g://Development/audioD3CK/lib/sqlite-amalgamation-3080500&#10;&#10;g://Development/audioD3CK/source/D3CKCore/Source&#10;g://Development/audioD3CK/source/D3CKInterface/Source"
                        useRuntimeLibDLL="0" postbuildCommand=""/>
       </CONFIGURATIONS>
       <MODULEPATHS>

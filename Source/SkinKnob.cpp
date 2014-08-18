@@ -32,30 +32,14 @@ void SkinKnob::changeListenerCallback(ChangeBroadcaster *b)
 {
     if(this->comp)
     {
-        this->setValue(comp->getFrame(),NotificationType::dontSendNotification);
+        this->setValue(comp->getValue(),NotificationType::dontSendNotification);
         this->setMouseDragSensitivity(comp->getSensitivity());
     }
 }
 
 void SkinKnob::sliderValueChanged(Slider* slider)
 {
-	comp->setFrame(slider->getValue());
-}
-
-void SkinKnob::mouseMove(const juce::MouseEvent &event)
-{
-    Slider::mouseMove(event);
-}
-void SkinKnob::mouseDown(const MouseEvent &e)
-{
-    if(getParentComponent() && getParentComponent()->getParentComponent())
-    {
-        getParentComponent()->getParentComponent()->addChildComponent(&popup);
-        MouseEvent e2 = e.getEventRelativeTo(this);
-        popup.popup(getX(),getY()+getHeight(),this->comp);
-    }
-    
-    Slider::mouseDown(e);
+	comp->setValue(slider->getValue());
 }
 
 void SkinKnob::mouseUp(const MouseEvent& e)
@@ -63,24 +47,21 @@ void SkinKnob::mouseUp(const MouseEvent& e)
     
 	if(e.mods.isCtrlDown())
     {
-		this->comp->setFrame(comp->getDefaultFrame());
+		this->comp->setValue(comp->getDefaultFrame());
     }
 	else
     {
 		if(comp->getCompType() == SkinComp::togglebutton)
 		{
 			int len = comp->getNumFrames();//getRange().getLength();
-			int currentStep = len * comp->getFrame();
+			int currentStep = len * comp->getValue();
 			currentStep ++;
 			currentStep %= (len+1);
-			comp->setFrame(  (float)currentStep / (len) );
+			comp->setValue(  (float)currentStep / (len) );
 		}
     }
     
 	Slider::mouseUp(e);
-    
-    popup.fadeout();
-    
     
 }
 void SkinKnob::mouseWheelMove(const MouseEvent& e,const MouseWheelDetails& wheel)
@@ -90,9 +71,6 @@ void SkinKnob::mouseWheelMove(const MouseEvent& e,const MouseWheelDetails& wheel
     d.deltaY /= 5;
 	Slider::mouseWheelMove(e,d);
     
-    
-    popup.popup(getX(),getY()+getHeight(),this->comp);
-    popup.fadeout();
 	
 }
 

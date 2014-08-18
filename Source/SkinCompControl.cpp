@@ -1,6 +1,5 @@
 #include "SkinComp.h"
 #include "Skin.h"
-#include "CompPopup.h"
 #include "SkinViewComp.h"
 #include "SkinComp.h"
 #include "SkinGUI.h"

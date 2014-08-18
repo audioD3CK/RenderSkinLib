@@ -18,7 +18,7 @@ SkinComp::SkinComp(Skin* skin)
     this->cliptype = SkinComp::rect;
 	sensitivity = 100;
 	compType = none;
-	framei = 0;
+	value = 0;
 	graphicArea.setBounds(0,0,20,20);
 	controllArea.setBounds(0,0,20,20);
     
@@ -37,7 +37,7 @@ Range<int> SkinComp::getRange()const
 double SkinComp::getAbsolutFrame()
 {
     const double length = frames.getEnd() - frames.getStart();//-1;
-	return length * getFrame() + frames.getStart();
+	return length * getValue() + frames.getStart();
 }
 
 int SkinComp::getNumFrames()const
@@ -68,10 +68,10 @@ const String SkinComp::getHelpText() const
 }
 
 
-double SkinComp::getFrame() const
+double SkinComp::getValue() const
 {
     
-    return framei;
+    return value;
     
 }
 
@@ -80,11 +80,9 @@ double SkinComp::getDefaultFrame()const
     return 0;
 }
 
-void SkinComp::setFrame(double frame)
+void SkinComp::setValue(double frame)
 {
-    
-	this->framei = frame;
-    
+	this->value = frame;
 	sendChangeMessage();
 }
 
@@ -118,7 +116,7 @@ void SkinComp::setClipType(ClipType type)
 
 const File SkinComp::getStripFile(const String& prefix)
 {
-    const String fileName = prefix+"_"+getName()+"."+skin->getImageFormatEnding();
+    const String fileName = getName()+"."+skin->getImageFormatEnding();
     
     return File(skin->getFile().getParentDirectory().getChildFile(fileName));
 }
@@ -189,7 +187,7 @@ Image SkinComp::getMask(const Rectangle<int>& rect)
     return  mask;
 }
 
-Component* SkinComp::createControllComponent()const
+Component* SkinComp::createControllComponent()
 {
     if(getCompType() == SkinComp::slider || getCompType() == SkinComp::togglebutton)
     {
@@ -222,9 +220,10 @@ void SkinComp::setFromXml(XmlElement* el)
     this->title = el->getStringAttribute("title");
     this->helpText = el->getStringAttribute("help");
     
-    
 	File stripFile = getStripFile(String(skin->getComps().items.size()+10));
 	this->stripImage = Skin::getFromFileOrMemory(stripFile,"_");
+    
+    this->parameterIndex = el->getIntAttribute("parameterIndex",this->getList()->indexOf(this));
     
 	sendChangeMessage();
 }

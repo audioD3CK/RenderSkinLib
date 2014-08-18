@@ -1,6 +1,5 @@
 #pragma once
 #include "JuceHeader.h"
-#include "CompPopup.h"
 
 class SkinComp;
 
@@ -16,8 +15,6 @@ public:
     void changeListenerCallback(ChangeBroadcaster* b)override;
     
 	void mouseUp(const MouseEvent& e)override;
-    void mouseDown(const MouseEvent& e)override;
-    void mouseMove(const MouseEvent& e)override;
 
     void sliderValueChanged(Slider* slider)override;
     
@@ -25,7 +22,6 @@ public:
 	void paint(Graphics& g)override;
     
 private:
-    CompPopup popup;
 	WeakReference<SkinComp> comp;
 };
 

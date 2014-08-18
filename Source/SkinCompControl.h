@@ -1,7 +1,6 @@
 #pragma once
 #include "JuceHeader.h"
 #include "BoundDrivenComponent.h"
-//#include "CompPopup.h"
 
 class SkinGUI;
 class SkinComp;

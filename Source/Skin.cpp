@@ -19,6 +19,7 @@ void Skin::initSize()
     this->scaleToScreen();
 }
 
+
 void Skin::refreshComps(bool sync)
 {
     for(int i = this->getComps().getNumRows() ; -- i >= 0 ; )
@@ -61,12 +62,11 @@ double Skin::getScale()const
 {
     return this->scale.getValue();
 }
-void Skin::setScale(double scale,bool sendChangeMess)
+void Skin::setScale(double newScale,bool sendChangeMess)
 {
-    const double rounded = scale;
-    if(this->scale != rounded)
+    if(this->scale != newScale)
     {
-        this->scale = rounded;
+        this->scale = newScale;
         if(sendChangeMess)
         {
             sendChangeMessage();
@@ -75,21 +75,8 @@ void Skin::setScale(double scale,bool sendChangeMess)
         else
         {
             this->refreshComps(false);
-            
         }
     }
-}
-
-Array<PropertyComponent*> Skin::getPropertyComponents() const
-{
-    Array<PropertyComponent*> arr;
-    arr.add(new SliderPropertyComponent(this->scale,"scale",0.1,10,0.1,1));
-    return arr;
-}
-
-String Skin::getPropertySectionName()const
-{
-    return "ui";
 }
 
 const String Skin::getImageFormatEnding(ImageFileFormat* format)
@@ -100,6 +87,8 @@ const String Skin::getImageFormatEnding(ImageFileFormat* format)
 	if(dynamic_cast<JPEGImageFormat*>(format)) return "jpg";
 	return "jpg";
 }
+
+
 
 SkinComp* Skin::createComp()
 {
@@ -163,7 +152,9 @@ Image Skin::getFromFileOrMemory(const File& file,const String& prefix)
 
 double Skin::getScreenRatio() const
 {
-    return this->screenRatio.getValue();
+    const double v = this->screenRatio.getValue();
+    double r = (double)roundToInt(10 * v) / 10.;;
+    return r;
 }
 
 void Skin::setScreenRatio(double ratio)
@@ -176,7 +167,6 @@ OwnedList<SkinComp>& Skin::getComps()const
 {
     return const_cast<Skin*>(this)->comps;
 }
-
 
 void Skin::loadFromXml(XmlElement* el)
 {
@@ -227,5 +217,38 @@ void Skin::loadFromFile(const File& file)
         this->file = file;
         loadFromXml(el);
     }
-	
+}
+
+#pragma mark
+#pragma mark propertySource
+#pragma mark
+
+Array<PropertyComponent*> Skin::getPropertyComponents()
+{
+    Array<PropertyComponent*> arr;
+    arr.add(new SliderPropertyComponent(this->scale,"scale",0.1,10,0,1));
+    arr.add(new Skin::ResetSizeButton(const_cast<Skin*>(this)));
+    arr.add(new BooleanPropertyComponent(this->popupsVisible,"show parameter readouts","visible"));
+    return arr;
+}
+
+String Skin::getPropertySectionName()const
+{
+    return "ui";
+}
+
+Skin::ResetSizeButton::ResetSizeButton(Skin* skin):
+ButtonPropertyComponent("reset ui size",false)
+{
+    this->skin = skin;
+}
+
+void Skin::ResetSizeButton::buttonClicked()
+{
+    skin->scaleToScreen();
+}
+
+String Skin::ResetSizeButton::getButtonText() const
+{
+    return "reset";
 }

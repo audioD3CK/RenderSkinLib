@@ -6,11 +6,9 @@ SkinComp::SkinComp(Skin* skin)
 {
 	this->skin = skin;
     
-    
     this->parameterIndex = 0;
     
 	graphicArea.addChangeListener(this);
-    
     
 	interpolation = (false);
 	useControllArea = (false);
@@ -21,7 +19,7 @@ SkinComp::SkinComp(Skin* skin)
 	value = 0;
 	graphicArea.setBounds(0,0,20,20);
 	controllArea.setBounds(0,0,20,20);
-    
+    gradient = 0;
 }
 
 SkinComp::~SkinComp(void)
@@ -60,19 +58,14 @@ int SkinComp::getSensitivity()const
     return this->sensitivity.getValue();
 }
 
-
-
 const String SkinComp::getHelpText() const
 {
     return this->helpText;
 }
 
-
 double SkinComp::getValue() const
 {
-    
     return value;
-    
 }
 
 double SkinComp::getDefaultFrame()const
@@ -92,8 +85,6 @@ void SkinComp::setType(CompType type)
 	sendChangeMessage();
 }
 
-
-
 SkinComp::ClipType SkinComp::getClipType()const
 {
     return this->cliptype;
@@ -112,30 +103,54 @@ SkinComp::CompType SkinComp::getCompType()const
 void SkinComp::setClipType(ClipType type)
 {
     this->cliptype = type;
+    sendChangeMessage();
 }
 
 const File SkinComp::getStripFile(const String& prefix)
 {
     const String fileName = getName()+"."+skin->getImageFormatEnding();
-    
     return File(skin->getFile().getParentDirectory().getChildFile(fileName));
 }
 
+void SkinComp::setUseControllArea(bool b)
+{
+    this->useControllArea = b;
+    if(this->controllArea == this->graphicArea)
+    {
+        this->controllArea = this->graphicArea.reduced(20);
+    }
+    sendChangeMessage();
+}
+
+
 Image SkinComp::getMask(const Rectangle<int>& rect)
 {
+    double r = this->gradient.getValue();
+    int borderW = r * rect.getWidth();
+    int borderH = r * rect.getHeight();
+
+    Rectangle<float> outer(rect.getWidth(),rect.getHeight());
+    Rectangle<float> center = outer.withSizeKeepingCentre(rect.getWidth() - borderW, rect.getHeight() - borderH);
+    
     Image mask = Image(Image::ARGB,rect.getWidth(),rect.getHeight(),true);
     Graphics g(mask);
     g.setColour(Colours::black);
     
     if(getClipType() == SkinComp::ellipse)
     {
-        g.fillEllipse(0,0,rect.getWidth(),rect.getHeight());
+        ColourGradient grad(Colours::black,center.getCentre().getX(),center.getCentre().getY(),Colours::transparentBlack,center.getCentre().getX(),0,true );
+        grad.addColour(1-r, Colours::black);
+        g.setFillType(grad);
+        g.fillEllipse(outer);
     }
-    else if(getClipType() == SkinComp::smoothrect)
+    else if(getClipType() == SkinComp::rect || getClipType() == SkinComp::smoothrect)
     {
-        Rectangle<float> outer(rect.getWidth(),rect.getHeight());
-        int border = 40 * this->skin->getScale();
-        Rectangle<float> center = outer.withSizeKeepingCentre(rect.getWidth()-border, rect.getHeight()-border);
+        
+        if(getClipType() == SkinComp::smoothrect)
+        {
+            borderW = borderH = 40 * this->skin->getScale();
+        }
+        
         g.fillRect(center);
         
         ColourGradient top(Colours::black,center.getX(),center.getY(),Colours::transparentBlack,center.getX(),outer.getY(),false);
@@ -177,11 +192,6 @@ Image SkinComp::getMask(const Rectangle<int>& rect)
         p.closeSubPath();
         g.setFillType(bottom);
         g.fillPath(p);
-        
-    }
-    else
-    {
-        g.fillAll();
     }
     
     return  mask;
@@ -189,17 +199,8 @@ Image SkinComp::getMask(const Rectangle<int>& rect)
 
 Component* SkinComp::createControllComponent()
 {
-    if(getCompType() == SkinComp::slider || getCompType() == SkinComp::togglebutton)
-    {
-        return new SkinKnob(const_cast<SkinComp*>(this));
-    }
-    else
-    {
-        return nullptr;
-    }
+    return new SkinKnob(const_cast<SkinComp*>(this));
 }
-
-
 
 void SkinComp::setFromXml(XmlElement* el)
 {
@@ -216,9 +217,10 @@ void SkinComp::setFromXml(XmlElement* el)
     
     frames.setStart(el->getIntAttribute("start"));
 	frames.setEnd(el->getIntAttribute("end"));
-
+    
     this->title = el->getStringAttribute("title");
     this->helpText = el->getStringAttribute("help");
+    this->gradient = el->getDoubleAttribute("gradient");
     
 	File stripFile = getStripFile(String(skin->getComps().items.size()+10));
 	this->stripImage = Skin::getFromFileOrMemory(stripFile,"_");
@@ -231,7 +233,9 @@ void SkinComp::setFromXml(XmlElement* el)
 void SkinComp::changeListenerCallback(ChangeBroadcaster* obj)
 {
 	if(obj == &graphicArea && (bool)useControllArea.getValue() == false)
+    {
 		controllArea = graphicArea;
+    }
 }
 
 void SkinComp::checkBounds(Rectangle<int>& bounds, const Rectangle<int>& previousBounds, const Rectangle<int>& limits, bool isStretchingTop, bool isStretchingLeft,bool isStretchingBottom,bool isStretchingRight)

@@ -29,11 +29,11 @@ public:
 	virtual double getDefaultFrame() const;
     virtual Range<int> getRange()const;
     
+    void setUseControllArea(bool b);
     
     virtual void setValue(double frame);
     virtual double getValue() const;
 
-    
     double getAbsolutFrame();
     
     virtual int getNumFrames()const;
@@ -80,6 +80,7 @@ public:
 	Value interpolation;
 	Value useControllArea;
     Value sensitivity;
+    Value gradient;
     
     String helpText;
     String title;

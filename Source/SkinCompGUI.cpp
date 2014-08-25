@@ -13,6 +13,8 @@ BoundDrivenComponent(&comp->graphicArea)
     
 	changeListenerCallback(comp);
     
+    this->setOpaque(false);
+    
 }
 
 double SkinCompGUI::getScale()const
@@ -23,7 +25,10 @@ double SkinCompGUI::getScale()const
 
 SkinCompGUI::~SkinCompGUI(void)
 {
-	comp->removeChangeListener(this);
+    if(comp)
+    {
+        comp->removeChangeListener(this);
+    }
 }
 
 Point<int> SkinCompGUI::getOffset()const
@@ -43,12 +48,11 @@ void SkinCompGUI::audioProcessorChanged (AudioProcessor* processor)
 
 bool SkinCompGUI::useMask()const
 {
-    return this->comp->getClipType() != SkinComp::rect;
+    return true;//this->comp->getClipType() != SkinComp::rect;
 }
 
 void SkinCompGUI::resized()
 {
-    //this->mask = comp->getMask(this->getBounds());
 }
 
 Image SkinCompGUI::getMask()
@@ -72,23 +76,15 @@ void SkinCompGUI::paint(Graphics& g)
     if(this->useMask())
     {
         g.reduceClipRegion(this->getMask(), AffineTransform::identity);
-        //            g.drawImageAt(this->getMask(), 0, 0);
     }
     
-    if(r2 == 0  || (bool)comp->interpolation.getValue() != true)
+    g.drawImage(comp->stripImage,0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index0,b.getWidth(),b.getHeight());
+    
+    if(comp->interpolation.getValue() && r2)
     {
-        g.drawImage(comp->stripImage,0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index0,b.getWidth(),b.getHeight());
-    }
-    else
-    {
-        g.drawImage(comp->stripImage,0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index0,b.getWidth(),b.getHeight());
-        
         g.setOpacity(r2);
-        
         g.drawImage(comp->stripImage,0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index1,b.getWidth(),b.getHeight());
     }
-    
-    
     
 }
 

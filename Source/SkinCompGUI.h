@@ -11,7 +11,7 @@ public AudioProcessorListener
 {
 public:
 	SkinCompGUI(SkinComp* comp,SkinGUI* skinGUI);
-	~SkinCompGUI(void);
+	~SkinCompGUI();
     
 	virtual void paint(Graphics& g)override;
 	void changeListenerCallback(ChangeBroadcaster* obj)override;

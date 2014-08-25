@@ -15,6 +15,8 @@ public:
 	void resized()override;
     double getScale()const override;
     
+    void changeListenerCallback(ChangeBroadcaster* b)override;
+    
     Point<int> getOffset()const override;
 
 private:

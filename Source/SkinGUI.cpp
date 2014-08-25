@@ -15,7 +15,7 @@ resizer(this,this)
 	addAndMakeVisible(&skinChooser);
     addAndMakeVisible(resizer);
     resizer.setAlpha(0);
-    
+    this->setOpaque(false);
     this->resizer.addMouseListener(this, true);
     
     this->setFixedAspectRatio((double)this->skin->graphicArea.getWidth() / (double)this->skin->graphicArea.getHeight());
@@ -129,15 +129,12 @@ void SkinGUI::changeListenerCallback(ChangeBroadcaster* obj)
 
 void SkinGUI::valueChanged (Value& value)
 {
-    if(&value == &skin->scale)
-    {
-        this->setSize();
-    }
+    this->setSize();
 }
 
 void SkinGUI::setSize()
 {
-    if(skin->getComps().getNumRows())
+    if(!skin->graphicArea.isEmpty())
     {
         double w = (double)skin->graphicArea.getWidth()*this->getScale();
         double h = (double)skin->graphicArea.getHeight()*this->getScale();
@@ -178,9 +175,10 @@ void SkinGUI::resized()
         }
     }
     
-    resizer.setBounds(getWidth()-controllHeight, getHeight()-controllHeight, controllHeight, controllHeight);
-    
     this->refreshCompPositions();
+    
+    resizer.toFront(false);
+    resizer.setBounds(getWidth()-controllHeight, getHeight()-controllHeight, controllHeight, controllHeight);
     
     
 }

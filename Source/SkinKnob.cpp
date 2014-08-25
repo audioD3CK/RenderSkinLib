@@ -32,6 +32,8 @@ void SkinKnob::changeListenerCallback(ChangeBroadcaster *b)
 {
     if(this->comp)
     {
+        this->setVisible(comp->getCompType() == SkinComp::slider || comp->getCompType() == SkinComp::togglebutton);
+        
         this->setValue(comp->getValue(),NotificationType::dontSendNotification);
         this->setMouseDragSensitivity(comp->getSensitivity());
     }

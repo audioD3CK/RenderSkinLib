@@ -20,9 +20,14 @@ BoundDrivenComponent(&comp->graphicArea)
         addAndMakeVisible(this->knob);
     }
     
-    
 	changeListenerCallback(comp);
-	resized();
+}
+
+void SkinCompControll::changeListenerCallback(ChangeBroadcaster* b)
+{
+    
+    BoundDrivenComponent::changeListenerCallback(b);
+    resized();
 }
 
 Point<int> SkinCompControll::getOffset()const

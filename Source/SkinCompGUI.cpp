@@ -60,30 +60,37 @@ Image SkinCompGUI::getMask()
     return comp->getMask(this->getBounds());//this->mask;
 }
 
+Image SkinCompGUI::getImage()const
+{
+    return this->comp->stripImage;
+}
+
 void SkinCompGUI::paint(Graphics& g)
 {
-    
-    double frame = comp->getAbsolutFrame() - comp->getRange().getStart();
-    
-    int index0 = this->comp->getCompType() == SkinComp::CompType::togglebutton ? (frame ? 1 : 0) : (int)frame  ;
-    int index1 = index0+1;
-    float r2 = frame - index0;
-    
-    
-    Rectangle<int> b = comp->graphicArea;
-    Rectangle<int> bScaled = b * this->getScale();
-    
-    if(this->useMask())
+    if(comp)
     {
-        g.reduceClipRegion(this->getMask(), AffineTransform::identity);
-    }
-    
-    g.drawImage(comp->stripImage,0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index0,b.getWidth(),b.getHeight());
-    
-    if(comp->interpolation.getValue() && r2)
-    {
-        g.setOpacity(r2);
-        g.drawImage(comp->stripImage,0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index1,b.getWidth(),b.getHeight());
+        double frame = comp->getAbsolutFrame() - comp->getRange().getStart();
+        
+        int index0 = this->comp->getCompType() == SkinComp::CompType::togglebutton ? (frame ? 1 : 0) : (int)frame  ;
+        int index1 = index0+1;
+        float r2 = frame - index0;
+        
+        
+        Rectangle<int> b = comp->graphicArea;
+        Rectangle<int> bScaled = b * this->getScale();
+        
+        if(this->useMask())
+        {
+            g.reduceClipRegion(this->getMask(), AffineTransform::identity);
+        }
+        
+        g.drawImage(this->getImage(),0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index0,b.getWidth(),b.getHeight());
+        
+        if(comp->interpolation.getValue() && r2)
+        {
+            g.setOpacity(r2);
+            g.drawImage(this->getImage(),0,0,bScaled.getWidth(),bScaled.getHeight(),0,b.getHeight()*index1,b.getWidth(),b.getHeight());
+        }
     }
     
 }

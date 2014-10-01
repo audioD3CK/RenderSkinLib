@@ -1,5 +1,6 @@
 #include "Skin.h"
 #include "SkinComp.h"
+#include "D3CKHistory.h"
 
 namespace BinaryData
 {
@@ -201,9 +202,10 @@ void Skin::loadFromXml(XmlElement* el)
 
 void Skin::clear()
 {
+    D3CKHistory h;
     while(this->getComps().getNumRows())
     {
-        this->comps.getLast()->moveToTrash();
+        this->comps.getLast()->moveToTrash(true,&h);
     }
     sendChangeMessage();
 }

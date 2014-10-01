@@ -17,7 +17,7 @@ BoundDrivenComponent(&comp->graphicArea)
     this->knob = comp->createControllComponent();
     if(this->knob)
     {
-        addAndMakeVisible(this->knob);
+        addChildComponent(this->knob);
     }
     
 	changeListenerCallback(comp);

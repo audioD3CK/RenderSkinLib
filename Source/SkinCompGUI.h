@@ -23,9 +23,13 @@ public:
     
     bool useMask()const;
     Image getMask();
+    Image getImage()const;
     
 protected:
     Image mask;
+    Image scaledCache;
+    double cachedSize;
+    
 	WeakReference<SkinComp> comp;
     SafePointer<SkinGUI> skinGUI;
 };

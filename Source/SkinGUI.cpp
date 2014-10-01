@@ -185,6 +185,9 @@ void SkinGUI::resized()
 
 void SkinGUI::paint(Graphics& g)
 {
-    Rectangle<int> c = skin->graphicArea;
-    g.drawImage(skin->backgroundImage,0,0,getWidth(),getHeight(),0,0,skin->backgroundImage.getWidth(),skin->backgroundImage.getHeight());
+    if(skin)
+    {
+        Rectangle<int> c = skin->graphicArea;
+        g.drawImage(skin->backgroundImage,0,0,getWidth(),getHeight(),0,0,skin->backgroundImage.getWidth(),skin->backgroundImage.getHeight());
+    }
 }

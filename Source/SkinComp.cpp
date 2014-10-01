@@ -128,7 +128,7 @@ Image SkinComp::getMask(const Rectangle<int>& rect)
     double r = this->gradient.getValue();
     int borderW = r * rect.getWidth();
     int borderH = r * rect.getHeight();
-
+    
     Rectangle<float> outer(rect.getWidth(),rect.getHeight());
     Rectangle<float> center = outer.withSizeKeepingCentre(rect.getWidth() - borderW, rect.getHeight() - borderH);
     
@@ -138,9 +138,15 @@ Image SkinComp::getMask(const Rectangle<int>& rect)
     
     if(getClipType() == SkinComp::ellipse)
     {
-        ColourGradient grad(Colours::black,center.getCentre().getX(),center.getCentre().getY(),Colours::transparentBlack,center.getCentre().getX(),0,true );
-        grad.addColour(1-r, Colours::black);
-        g.setFillType(grad);
+        if(r)
+        {
+            ColourGradient grad(Colours::black,center.getCentre().getX(),center.getCentre().getY(),Colours::transparentBlack,center.getCentre().getX(),0,true );
+            grad.addColour(1-r, Colours::black);
+            g.setFillType(grad);
+        }
+        else
+        {
+        }
         g.fillEllipse(outer);
     }
     else if(getClipType() == SkinComp::rect || getClipType() == SkinComp::smoothrect)
@@ -153,45 +159,48 @@ Image SkinComp::getMask(const Rectangle<int>& rect)
         
         g.fillRect(center);
         
-        ColourGradient top(Colours::black,center.getX(),center.getY(),Colours::transparentBlack,center.getX(),outer.getY(),false);
-        Path p;
-        p.startNewSubPath(outer.getTopLeft());
-        p.lineTo(outer.getTopRight());
-        p.lineTo(center.getTopRight());
-        p.lineTo(center.getTopLeft());
-        p.closeSubPath();
-        g.setFillType(top);
-        g.fillPath(p);
-        
-        ColourGradient left(Colours::black,center.getX(),center.getY(),Colours::transparentBlack,outer.getX(),center.getY(),false);
-        p.clear();
-        p.startNewSubPath(center.getTopLeft());
-        p.lineTo(center.getBottomLeft());
-        p.lineTo(outer.getBottomLeft());
-        p.lineTo(outer.getTopLeft());
-        p.closeSubPath();
-        g.setFillType(left);
-        g.fillPath(p);
-        
-        ColourGradient right(Colours::black,center.getRight(),center.getY(),Colours::transparentBlack,outer.getRight(),center.getY(),false);
-        p.clear();
-        p.startNewSubPath(center.getTopRight());
-        p.lineTo(center.getBottomRight());
-        p.lineTo(outer.getBottomRight());
-        p.lineTo(outer.getTopRight());
-        p.closeSubPath();
-        g.setFillType(right);
-        g.fillPath(p);
-        
-        ColourGradient bottom(Colours::black,center.getX(),center.getBottom(),Colours::transparentBlack,center.getX(),outer.getBottom(),false);
-        p.clear();
-        p.startNewSubPath(center.getBottomLeft());
-        p.lineTo(center.getBottomRight());
-        p.lineTo(outer.getBottomRight());
-        p.lineTo(outer.getBottomLeft());
-        p.closeSubPath();
-        g.setFillType(bottom);
-        g.fillPath(p);
+        if(r)
+        {
+            ColourGradient top(Colours::black,center.getX(),center.getY(),Colours::transparentBlack,center.getX(),outer.getY(),false);
+            Path p;
+            p.startNewSubPath(outer.getTopLeft());
+            p.lineTo(outer.getTopRight());
+            p.lineTo(center.getTopRight());
+            p.lineTo(center.getTopLeft());
+            p.closeSubPath();
+            g.setFillType(top);
+            g.fillPath(p);
+            
+            ColourGradient left(Colours::black,center.getX(),center.getY(),Colours::transparentBlack,outer.getX(),center.getY(),false);
+            p.clear();
+            p.startNewSubPath(center.getTopLeft());
+            p.lineTo(center.getBottomLeft());
+            p.lineTo(outer.getBottomLeft());
+            p.lineTo(outer.getTopLeft());
+            p.closeSubPath();
+            g.setFillType(left);
+            g.fillPath(p);
+            
+            ColourGradient right(Colours::black,center.getRight(),center.getY(),Colours::transparentBlack,outer.getRight(),center.getY(),false);
+            p.clear();
+            p.startNewSubPath(center.getTopRight());
+            p.lineTo(center.getBottomRight());
+            p.lineTo(outer.getBottomRight());
+            p.lineTo(outer.getTopRight());
+            p.closeSubPath();
+            g.setFillType(right);
+            g.fillPath(p);
+            
+            ColourGradient bottom(Colours::black,center.getX(),center.getBottom(),Colours::transparentBlack,center.getX(),outer.getBottom(),false);
+            p.clear();
+            p.startNewSubPath(center.getBottomLeft());
+            p.lineTo(center.getBottomRight());
+            p.lineTo(outer.getBottomRight());
+            p.lineTo(outer.getBottomLeft());
+            p.closeSubPath();
+            g.setFillType(bottom);
+            g.fillPath(p);
+        }
     }
     
     return  mask;

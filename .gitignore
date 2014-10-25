@@ -1,0 +1,8 @@
+Builds
+JuceLibraryCode
+.DS_Store
+built.mac.Debug.md5
+built.win.Debug.md5
+RenderSkinLib.jucer.md5
+RenderSkinLib.mac
+RenderSkinLib.pkgproj
